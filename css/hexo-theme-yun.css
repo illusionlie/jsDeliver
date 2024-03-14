@@ -124,7 +124,7 @@ html.dark {
   --hty-secondary-text-color: #555;
   --post-block-bg-color: #fff;
   --smc-link-color: #51c5ff;
-  --yun-bg-image: url("/img/bg_main.png");
+  --yun-bg-image: url("https://cdn.jsdelivr.net/gh/illusionlie/jsDeliver@latest/img/bg_main.png");
   --banner-line-color: #000;
   --banner-char-color: #000;
 }
@@ -1799,7 +1799,7 @@ body::before {
   max-height: 10000px;
 }
 :root {
-  --sidebar-bg-image: url("/img/signiL-black.png");
+  --sidebar-bg-image: url("https://cdn.jsdelivr.net/gh/illusionlie/jsDeliver@latest/img/signiL-black.png");
 }
 #menu-btn {
   display: none;
