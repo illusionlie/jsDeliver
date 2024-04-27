@@ -4,7 +4,7 @@ function updateCoords(e) {
 }
 function setParticuleDirection(e) {
     var t = anime.random(0, 360) * Math.PI / 180
-      , a = anime.random(50, 180)
+      , a = anime.random(50, 90)
       , n = [-1, 1][anime.random(0, 1)] * a;
     return {
         x: e.x + n * Math.cos(t),
@@ -16,7 +16,7 @@ function createParticule(e, t) {
     return a.x = e,
     a.y = t,
     a.color = colors[anime.random(0, colors.length - 1)],
-    a.radius = anime.random(16, 32),
+    a.radius = anime.random(10, 20),
     a.endPos = setParticuleDirection(a),
     a.draw = function() {
         ctx.beginPath(),
@@ -52,10 +52,11 @@ function renderParticule(e) {
         e.animatables[t].target.draw()
 }
 function animateParticules(e, t) {
-    for (var a = createCircle(e, t), n = [], i = 0; i < numberOfParticules; i++)
+    for (var a = createCircle(e, t), n = [], i = 0; i < numberOfParticules; i++) {
         n.push(createParticule(e, t));
+	}
     anime.timeline().add({
-        targets: n,
+        targets: n,		
         x: function(e) {
             return e.endPos.x
         },
@@ -63,7 +64,7 @@ function animateParticules(e, t) {
             return e.endPos.y
         },
         radius: .1,
-        duration: anime.random(1200, 1800),
+        duration: anime.random(800, 1200),
         easing: "easeOutExpo",
         update: renderParticule
     }).add({
@@ -96,7 +97,7 @@ function debounce(fn, delay) {
 var canvasEl = document.querySelector(".fireworks");
 if (canvasEl) {
     var ctx = canvasEl.getContext("2d")
-      , numberOfParticules = 30
+      , numberOfParticules = 18
       , pointerX = 0
       , pointerY = 0
       , tap = "mousedown"
