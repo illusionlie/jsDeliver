@@ -1,0 +1,46 @@
+name: Auto Tag Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-tag-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: pip install semver
+
+      - name: Calculate new version and create tag
+        run: |
+          # 获取最新的tag
+          latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+          # 计算新的版本号
+          new_tag=$(python -c "import semver; print(semver.bump_patch('${latest_tag}'))")
+          IFS='.' read -ra ADDR <<< "$new_tag"
+          if [ ${ADDR[2]} -ge 33 ]; then
+            new_tag=$(python -c "import semver; print(semver.bump_minor('${latest_tag[:-3]}'))")
+            new_tag="${new_tag}.0"
+          fi
+          git tag $new_tag
+          git push origin $new_tag
+          echo "New tag $new_tag created"
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.new_tag }}
+          release_name: Release ${{ env.new_tag }}
+          draft: false
+          prerelease: false
