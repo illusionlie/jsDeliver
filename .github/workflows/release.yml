@@ -47,6 +47,8 @@ jobs:
         with:
           tag_name: ${{ steps.calculate_tag.outputs.NEW_TAG }}
           release_name: Release ${{ steps.calculate_tag.outputs.NEW_TAG }}
-          body: Automatic release created from the main branch.
+          body: |
+            **Automatic release created from the main branch.**
+            **Full compare**: https://github.com/${{ github.repository }}/compare/${{ steps.get_tag.outputs.LATEST_TAG }}...${{ steps.calculate_tag.outputs.NEW_TAG }}
           draft: false
           prerelease: false
