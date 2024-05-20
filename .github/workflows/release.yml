@@ -52,3 +52,11 @@ jobs:
             **Full compare**: https://github.com/${{ github.repository }}/compare/${{ steps.get_tag.outputs.LATEST_TAG }}...${{ steps.calculate_tag.outputs.NEW_TAG }}
           draft: false
           prerelease: false
+  purge-cdn:
+    needs: [create_release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: purge jsdelivr
+        run: |
+          sleep 5
+          curl https://purge.jsdelivr.net/gh/${{ github.repository }}@latest/
