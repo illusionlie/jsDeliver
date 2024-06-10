@@ -32,6 +32,10 @@ jobs:
             Z=0
             Y=$((Y + 1))
           fi
+          if (( Y > 33 )); then
+            Y=0
+            X=$((X + 1))
+          fi
           NEW_TAG="${X}.${Y}.${Z}"
           echo "::set-output name=NEW_TAG::$NEW_TAG"
 
