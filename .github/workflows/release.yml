@@ -64,3 +64,4 @@ jobs:
         run: |
           sleep 5
           curl https://purge.jsdelivr.net/gh/${{ github.repository }}@latest/
+          curl https://purge.jsdelivr.net/gh/${{ github.repository }}/
