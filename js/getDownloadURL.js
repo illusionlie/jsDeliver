@@ -24,10 +24,12 @@ function showMessagePopup(message) {
     lines.forEach(line => {
         const proxypopupText = document.createElement('p');
         proxypopupText.textContent = line;
+        proxypopupText.setAttribute('style', 'color: black;');
         proxypopup.appendChild(proxypopupText);
     });
     const popupClose = document.createElement('button');
     popupClose.textContent = 'X';
+    popupClose.setAttribute('style', 'color: black;');
     popupClose.style.position = 'absolute';
     popupClose.style.top = '10px';
     popupClose.style.right = '10px';
