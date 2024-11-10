@@ -2,9 +2,15 @@ function detectBot() {
     const detectors = {
       webDriver: navigator.webdriver,
       headlessBrowser: navigator.userAgent.includes("Headless"),
+      appVersion: navigator.appVersion.includes("Headless"),
       noLanguages: (navigator.languages?.length || 0) === 0,
-      pdfViewer: navigator.pdfViewerEnabled,
+      pdfViewer: !navigator.pdfViewerEnabled,
+      noPlugins: navigator.plugins.length == 0,
       inconsistentEval: detectInconsistentEval(),
+      WebRTC: !(!!window.RTCPeerConnection),
+      isAudioVideoSupported: !(!!(document.createElement('audio') && document.createElement('video'))),
+      pluginArrayCheck: !(navigator.plugins instanceof PluginArray),
+      navigatorPermissions: (navigator.permissions.query({ name: 'notifications' }), Notification.permission === 'denied' && permissionStatus.state === 'prompt'),
       domManipulation: document.documentElement
         .getAttributeNames()
         .some((attr) => ["selenium", "webdriver", "driver"].includes(attr)),
@@ -61,7 +67,7 @@ function detectBot() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const verdict = detectBot();
-  if (verdict.bot) {
+  if (verdict.verdict.bot) {
     document.body.innerHTML = "";
     window.location.href = "about:blank";
     window.stop();

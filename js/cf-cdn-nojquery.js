@@ -14,10 +14,12 @@ function checkCFcdn() {
         }
       }
     } else {
+      document.getElementById("cf-cdn").innerHTML = "异常";
       console.error('节点信息请求失败');
     }
   };
   request.onerror = function() {
+    document.getElementById("cf-cdn").innerHTML = "异常";
     console.error('节点信息网络错误');
   };
   request.send();
